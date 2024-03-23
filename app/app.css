@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-display: "Clear Sans", "sans-serif";
+}
+.test {
+  color: red;
+}
