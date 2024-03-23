@@ -1,3 +1,13 @@
+<script setup lang="ts">
+</script>
+
+
 <template>
-  <h1 class="font-display font-bold text-4xl test">Dashboard</h1>
+  <ClientOnly>
+    <NuxtLayout name="dashboard">
+      <VisitorsChart/>
+      <VisitorsChart/>
+      <VisitorsChart/>
+    </NuxtLayout>
+  </ClientOnly>
 </template>

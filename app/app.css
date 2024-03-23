@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-family-display: "Clear Sans", "sans-serif";
+  --default-font-family: "Clear Sans", "sans-serif";
+
+  --color-stone: #F7F7F7
 }
-.test {
-  color: red;
+body {
+  background-color: var(--color-stone);
 }
