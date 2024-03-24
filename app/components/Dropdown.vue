@@ -1,6 +1,5 @@
 <script setup lang="ts" generic="T">
   const props = defineProps<{
-    label: string,
     items: T[],
     /**
 	  * The property of the item to use as the label. If null, the item itself will be used.
@@ -10,10 +9,8 @@
   }>();
   const chevronDownPath = 'M17 10.4L12 14.9L7 10.4';
   let isActive = ref(false);
-  const selected = ref(props.items[0]);
+  const selected = defineModel<T>('selected', { required: true});
 
-  console.log(selected)
-  
   function handleClick() {
     isActive.value = !isActive.value;
   }
@@ -26,17 +23,12 @@
       @click="handleClick"
     >
       <span>
-        <template v-if="selected != null">
           <template v-if="propLabel != null">
             {{ selected[propLabel] }}
           </template>
           <template v-else>
             {{ selected }}
           </template>
-        </template>
-        <template v-else>
-          {{ label }}
-        </template>
       </span>
       <i>
         <svg
@@ -52,7 +44,7 @@
     </button>
     <Transition>
     <div v-if="isActive" class="absolute top z-10 mt-2">
-        <ListBox v-model:is-open="isActive" :items="items" v-model:selected="selected"/>
+        <ListBox v-model:is-open="isActive" :items="items" v-model:selected="selected" />
       </div>
     </Transition>
   </div>

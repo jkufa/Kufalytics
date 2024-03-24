@@ -11,6 +11,7 @@
   import { GridComponent } from 'echarts/components';
   import { LineChart } from 'echarts/charts';
   import { graphic } from 'echarts';
+import { useVisitorsStore } from '~/utils/stores/visitors';
   use([
     CanvasRenderer,
     TitleComponent,
@@ -20,14 +21,22 @@
     LineChart,
   ]);
 
-  const dates = genDates('week');
-  const views = genViews(dates.length, 10000);
-  const totalViews = views.reduce((acc, curr) => acc + curr);
-  const option = {
+  const visitorsData = useVisitorsStore();
+  visitorsData.$subscribe((mutation, state) => {
+    categories.value = visitorsData.getCategoryData();
+    views.value = visitorsData.getViewData();
+    totalViews.value = views.value.reduce((acc, curr) => acc + curr);
+  });
+
+  let categories = ref(visitorsData.getCategoryData());
+  let views = ref(visitorsData.getViewData());
+  let totalViews = ref(views.value.reduce((acc, curr) => acc + curr));
+
+  const option = ref({
     tooltip: {},
     xAxis: {
       type: 'category',
-      data: dates,
+      data: categories,
       axisTick: { show: false },
     },
     yAxis: {
@@ -61,7 +70,7 @@
     },
     animationEasing: 'cubicInOut',
     animationDuration: 1000,
-  };
+  });
 </script>
 
 <template>

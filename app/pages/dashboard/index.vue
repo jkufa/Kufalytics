@@ -1,15 +1,14 @@
 <script setup lang="ts">
-  const currentSite = 'kufa.io';
+  import { useVisitorsStore } from '~/utils/stores/visitors';
+  const visitorsData = useVisitorsStore();
 
-  const dropdownOptions = [
-    // 'Today',
-    'Last week',
-    // 'Last 30 days',
-    'Month to date',
-    // 'Last 12 months',
-    // 'Year to date',
-    'All time',
-  ]
+  const currentSite = 'kufa.io';
+  const dropdownOptions = Object.keys(VisitorView).filter((v) => isNaN(Number(v)));
+  const label = ref(visitorsData.getView());
+
+  watch(label, (newLabel, oldLabel) => {
+    visitorsData.setView(VisitorView[newLabel]);
+  })
 
   const domainUrl = 'kufa.io';
   function buildFaviconUrl(domain: string) {
@@ -26,7 +25,7 @@
           <img class="w-8" :src="buildFaviconUrl(domainUrl)">
           {{ currentSite }}
         </span>
-        <Dropdown label="Month to date" :items="dropdownOptions" />
+        <Dropdown :items="dropdownOptions" v-model:selected="label" />
       </div>
       <VisitorsChart />
       <LocationsChart />

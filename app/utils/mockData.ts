@@ -1,16 +1,32 @@
-export function genDates(period: 'month' | 'week'): string[] {
+import { VisitorView } from "./enums";
+
+export function genDates(period: VisitorView): string[] {
   const dates: string[] = [];
   const today = new Date();
   const dayOfMonth = today.getDate();
+  const month = today.getMonth();
+  /**
+   * Either a day or a month
+   */
+  let unit = 0; 
 
-  let day = 0;
-  if (period === 'week') {
-    day = dayOfMonth - 7;
+  if (period === VisitorView['Year to date']) {
+    const d = new Date();
+    while (unit < month + 1) {
+      d.setMonth(unit);
+      dates.push(`${Intl.DateTimeFormat('en-US', { month: 'short'}).format(d)}`);
+      unit++;
+    }
+    return dates;
   }
 
-  while (day < dayOfMonth) {
-    dates.push(`${today.toLocaleDateString('en-US', { month: 'short'})} ${day + 1}`);
-    day++;
+  if (period === VisitorView['Last week']) {
+    unit = dayOfMonth - 7;
+  }
+
+  while (unit < dayOfMonth) {
+    dates.push(`${today.toLocaleDateString('en-US', { month: 'short'})} ${unit + 1}`);
+    unit++;
   }
   return dates;
 }
