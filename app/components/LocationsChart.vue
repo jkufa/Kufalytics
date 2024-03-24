@@ -45,6 +45,13 @@
 
 <template>
   <ChartContainer>
-    <v-chart :option="option" autoresize />
+    <template v-slot:header>
+      <div class="text-text">
+        <p class="font-black text-xl">Top Locations</p>
+      </div>
+    </template>
+    <template v-slot:graph>
+      <v-chart :option="option" autoresize />
+    </template>
   </ChartContainer>
 </template>

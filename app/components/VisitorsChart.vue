@@ -11,7 +11,6 @@
   import { GridComponent } from 'echarts/components';
   import { LineChart } from 'echarts/charts';
   import { graphic } from 'echarts';
-
   use([
     CanvasRenderer,
     TitleComponent,
@@ -21,18 +20,22 @@
     LineChart,
   ]);
 
-
+  const dates = genDates('week');
+  const views = genViews(dates.length, 10000);
+  const totalViews = views.reduce((acc, curr) => acc + curr);
   const option = {
+    tooltip: {},
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: dates,
+      axisTick: { show: false },
     },
     yAxis: {
       type: 'value'
     },
     series: [
       {
-        data: [150, 230, 224, 218, 135, 147, 260],
+        data: views,
         type: 'line',
         itemStyle: {
           color: 'rgb(0, 142, 117)'
@@ -51,7 +54,7 @@
       },
     ],
     grid: {
-      left: 32,
+      left: 40,
       right: 0,
       top: 32,
       bottom: 32,
@@ -63,6 +66,14 @@
 
 <template>
   <ChartContainer>
-    <v-chart :option="option" autoresize />
+    <template v-slot:header>
+      <div class="text-text">
+        <p class="uppercase opacity-60 font-bold text-xs">Total Unique Visitors</p>
+        <p class="font-black text-xl">{{ totalViews.toLocaleString('en-US') }}</p>
+      </div>
+    </template>
+    <template v-slot:graph>
+      <v-chart :option="option" autoresize />
+    </template>
   </ChartContainer>
 </template>
