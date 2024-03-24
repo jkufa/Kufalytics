@@ -3,8 +3,17 @@
 @theme {
   --default-font-family: "Clear Sans", "sans-serif";
 
-  --color-stone: #F7F7F7
+  --color-stone: #F7F7F7;
+  --color-stonier: #EBEBED;
+  --color-greenfield: #008E75;
+  --color-text: #212927;
 }
 body {
   background-color: var(--color-stone);
+}
+
+a,button {
+  &:focus-visible {
+      outline-color: var(--color-greenfield);
+  }
 }

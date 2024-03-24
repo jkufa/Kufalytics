@@ -9,7 +9,7 @@
   import VChart, { THEME_KEY } from 'vue-echarts';
   import { ref, provide } from 'vue';
   import { GridComponent } from 'echarts/components';
-  import { LineChart } from 'echarts/charts';
+  import { BarChart } from 'echarts/charts';
   import { graphic } from 'echarts';
 
   use([
@@ -18,47 +18,29 @@
     TooltipComponent,
     LegendComponent,
     GridComponent,
-    LineChart,
+    BarChart,
   ]);
-
 
   const option = {
     xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     },
     yAxis: {
-      type: 'value'
+      data: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6', 'Category 7', 'Category 9', 'Category 10']
     },
-    series: [
-      {
-        data: [150, 230, 224, 218, 135, 147, 260],
-        type: 'line',
-        itemStyle: {
+    series: [{
+      itemStyle: {
           color: 'rgb(0, 142, 117)'
         },
-        areaStyle: {
-          color: new graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgb(0, 142, 117, .25)'
-            },
-            {
-              offset: 1,
-              color: 'rgb(255, 255, 255, 0)'
-            }])
-        },
-      },
-    ],
+        type: 'bar',
+        data: [150, 54, 180, 250, 210, 99, 20, 167, 147,].sort((a, b) => a - b) // Example data for the bar chart
+    }],
     grid: {
-      left: 32,
-      right: 0,
+      left: 72,
       top: 32,
       bottom: 32,
     },
-    animationEasing: 'cubicInOut',
-    animationDuration: 1000,
   };
+
 </script>
 
 <template>
