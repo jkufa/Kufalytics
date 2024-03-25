@@ -10,12 +10,15 @@ export const useVisitorsStore = defineStore('visitors', {
     return { 
       view: view,
       categoryData: catagories,
-      viewData: views
+      viewData: views,
      }
   },
   actions: {
     getView(): keyof typeof VisitorView {
       return VisitorView[this.view] as keyof typeof VisitorView;
+    },
+    getNumDays(): number {
+      return this.categoryData.length;
     },
     getCategoryData() {
       return this.categoryData;
@@ -26,7 +29,7 @@ export const useVisitorsStore = defineStore('visitors', {
     setView(view: VisitorView) {
       this.view = view;
       this.categoryData = genDates(view);
-      this.viewData = genViews(this.categoryData.length, 1000);
+      this.viewData = genViews(this.getNumDays(), 10000);
     }
   },
 })

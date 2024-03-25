@@ -6,11 +6,13 @@
     TooltipComponent,
     LegendComponent,
   } from 'echarts/components';
-  import VChart, { THEME_KEY } from 'vue-echarts';
-  import { ref, provide } from 'vue';
+  import VChart from 'vue-echarts';
   import { GridComponent } from 'echarts/components';
   import { BarChart } from 'echarts/charts';
-  import { graphic } from 'echarts';
+  import type { ComposeOption } from 'echarts/core';
+  import type { BarSeriesOption } from 'echarts/charts';
+  import type { GridComponentOption } from 'echarts/components';
+import { useVisitorsStore } from '~/utils/stores/visitors';
 
   use([
     CanvasRenderer,
@@ -21,25 +23,69 @@
     BarChart,
   ]);
 
-  const option = {
+  type Props = {
+    /**
+     * Max amount of locations to display
+     */
+    maxCount: number,
+    numberOfDays: number
+  };
+  const props = withDefaults(defineProps<Props>(), { maxCount: 10 });
+
+
+  const visitorsData = useVisitorsStore();
+  visitorsData.$subscribe(() => {
+    categories.value = genCountries(props.maxCount);
+    visits.value = genViews(props.maxCount, 10000).sort((a, b) => a - b);
+  });
+  const categories: Ref<string[]> = ref(genCountries(props.maxCount));
+  const visits: Ref<number[]> = ref(genViews(props.maxCount, 10000).sort((a, b) => a - b));
+
+  type EChartsOption = ComposeOption<GridComponentOption | BarSeriesOption>;
+  const option: Ref<EChartsOption> = ref({
+    tooltip: {
+      formatter: function(params: TooltipParams) {
+        return `<span class="text-text">
+          <span class="font-bold">${params.value.toLocaleString('en-us')}</span>
+          visitors</span>`
+       },
+      borderColor: 'white'
+    },
     xAxis: {
     },
     yAxis: {
-      data: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6', 'Category 7', 'Category 9', 'Category 10']
+      type: 'category',
+      data: categories,
+      show: false
     },
     series: [{
-      itemStyle: {
-          color: 'rgb(0, 142, 117)'
-        },
         type: 'bar',
-        data: [150, 54, 180, 250, 210, 99, 20, 167, 147,].sort((a, b) => a - b) // Example data for the bar chart
+        data: visits,
+        itemStyle: {
+          color: '#F1F9F7',
+          borderRadius: 3
+        },
+        emphasis: {
+          itemStyle: {
+            // Color in emphasis state.
+            color: '#E0EFEB'
+          },
+        },
+        barCategoryGap: '5%',
+        label: {
+          show: true,
+          position: 'insideLeft', // Change this value to fit your preference
+          formatter: '{b}', // Display the category name
+          color: '#002D09', // Label text color
+          padding: [0, 0, 0, 16]
+        }
     }],
     grid: {
-      left: 72,
+      left: 4,
       top: 32,
       bottom: 32,
     },
-  };
+  });
 
 </script>
 

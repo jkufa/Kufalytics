@@ -6,7 +6,7 @@
   const dropdownOptions = Object.keys(VisitorView).filter((v) => isNaN(Number(v)));
   const label = ref(visitorsData.getView());
 
-  watch(label, (newLabel, oldLabel) => {
+  watch(label, (newLabel, _) => {
     visitorsData.setView(VisitorView[newLabel]);
   })
 

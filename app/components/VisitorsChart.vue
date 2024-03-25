@@ -22,7 +22,7 @@ import { useVisitorsStore } from '~/utils/stores/visitors';
   ]);
 
   const visitorsData = useVisitorsStore();
-  visitorsData.$subscribe((mutation, state) => {
+  visitorsData.$subscribe(() => {
     categories.value = visitorsData.getCategoryData();
     views.value = visitorsData.getViewData();
     totalViews.value = views.value.reduce((acc, curr) => acc + curr);
@@ -33,7 +33,17 @@ import { useVisitorsStore } from '~/utils/stores/visitors';
   let totalViews = ref(views.value.reduce((acc, curr) => acc + curr));
 
   const option = ref({
-    tooltip: {},
+    tooltip: {
+      formatter: function(params: TooltipParams) {
+        return `
+          <p class="text-text text-lg">Visitors</p>
+          <div class="flex gap-5 text-text items-center -mb-1">
+            <span class="opacity-60">${params.name}</span>
+            <span class="font-bold text-lg">${params.value.toLocaleString('en-us')}</span>
+          </div>`;
+       },
+      borderColor: 'white'
+    },
     xAxis: {
       type: 'category',
       data: categories,
