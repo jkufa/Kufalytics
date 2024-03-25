@@ -36,11 +36,14 @@ import { useVisitorsStore } from '~/utils/stores/visitors';
     tooltip: {
       formatter: function(params: TooltipParams) {
         return `
-          <p class="text-text text-lg">Visitors</p>
-          <div class="flex gap-5 text-text items-center -mb-1">
-            <span class="opacity-60">${params.name}</span>
-            <span class="font-bold text-lg">${params.value.toLocaleString('en-us')}</span>
-          </div>`;
+          <div class="flex flex-col gap-1 text-text">
+            <span class="text-text">
+              <span class="font-bold text-md">${params.value.toLocaleString('en-us')}</span>
+              visitors
+              </span>
+            <span class="opacity-60 -mb-1">${params.name}</span>
+          </div>
+          `;
        },
       borderColor: 'white'
     },

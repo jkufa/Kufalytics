@@ -45,9 +45,12 @@ import { useVisitorsStore } from '~/utils/stores/visitors';
   const option: Ref<EChartsOption> = ref({
     tooltip: {
       formatter: function(params: TooltipParams) {
-        return `<span class="text-text">
-          <span class="font-bold">${params.value.toLocaleString('en-us')}</span>
-          visitors</span>`
+        return `
+          <span class="text-text">
+            <span class="font-bold text-md">${params.value.toLocaleString('en-us')}</span>
+            visitors
+          </span>
+          `
        },
       borderColor: 'white'
     },
