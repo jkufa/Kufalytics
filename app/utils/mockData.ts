@@ -69,8 +69,18 @@ export function getRandomCountry(): Country {
 }
 
 export function genCountries(count: number) {
+  const MAX_LEN = COUNTRIES.length;
+  if (MAX_LEN < count) {
+    console.warn(`Cannot to generate more countries than available.\nReducing count down to ${MAX_LEN}.`);
+    count = MAX_LEN;
+  }
+  const seen = new Set<string>();
   return Array.from({ length: count }, () => {
-    const country = getRandomCountry();
+    let country = getRandomCountry();
+    while (seen.has(country.code)) {
+      country = getRandomCountry();
+    }
+    seen.add(country.code);
     return `${getFlagEmoji(country.code)} ${country.names[0]}`;
   });
 }
