@@ -7,9 +7,17 @@
 	  */
     propLabel?: keyof T
   }>();
+  const id = genId();
   const chevronDownPath = 'M17 10.4L12 14.9L7 10.4';
   let isActive = ref(false);
   const selected = defineModel<T>('selected', { required: true});
+
+  // Click out handler
+  window.addEventListener('click', (e: MouseEvent) => {
+    if (!(e.target as HTMLElement).closest('#' + id)) {
+      isActive.value = false;
+    }
+  });
 
   function handleClick() {
     isActive.value = !isActive.value;
@@ -17,7 +25,7 @@
 </script>
 
 <template>
-  <div class="inline-block w-fit text-sm text-text">
+  <div class="inline-block w-fit text-sm text-text" :id="id">
     <button class="bg-white px-4 h-9 min-w-48 justify-between rounded-[3px] hover:cursor-pointer hover:bg-stonier flex items-center gap-2 transition-colors"
     :class="{ '!bg-stonier': isActive }"
       @click="handleClick"

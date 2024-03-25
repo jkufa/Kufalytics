@@ -12,7 +12,7 @@
 </script>
 
 <template>
-  <ul class="list p-2 bg-white rounded-[3px] shadow-md min-w-48 flex flex-col gap-1">
+  <ul class="list p-2 bg-white rounded-[3px] shadow-lg min-w-48 flex flex-col gap-1">
     <li v-for="item in items">
       <button class="p-2 rounded-sm hover:cursor-pointer hover:bg-stonier w-full text-left focus-within:bg-stonier transition-colors"
         @click="handleClick(item)"
