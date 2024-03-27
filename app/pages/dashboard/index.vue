@@ -25,7 +25,7 @@
           <img class="w-8" :src="buildFaviconUrl(domainUrl)">
           {{ currentSite }}
         </span>
-        <Dropdown :items="dropdownOptions" v-model:selected="label" />
+        <Dropdown :items="dropdownOptions" v-model:selected="label" id="timeframe" />
       </div>
       <VisitorsChart />
       <LocationsChart />
