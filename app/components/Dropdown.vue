@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
   const props = defineProps<{
+    id: string,
     items: T[],
     /**
 	  * The property of the item to use as the label. If null, the item itself will be used.
@@ -7,14 +8,13 @@
 	  */
     propLabel?: keyof T
   }>();
-  const id = genId();
   const chevronDownPath = 'M17 10.4L12 14.9L7 10.4';
   let isActive = ref(false);
   const selected = defineModel<T>('selected', { required: true});
 
   // Click out handler
   window.addEventListener('click', (e: MouseEvent) => {
-    if (!(e.target as HTMLElement).closest('#' + id)) {
+    if (!(e.target as HTMLElement).closest('#' + props.id)) {
       isActive.value = false;
     }
   });

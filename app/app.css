@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --default-font-family: "Clear Sans", "sans-serif";
+  --default-font-family: "Clear Sans2", "sans-serif", "system-ui";
 
   --color-stone: #F7F7F7;
   --color-stonier: #EBEBED;
@@ -16,4 +16,26 @@ a,button {
   &:focus-visible {
       outline-color: var(--color-greenfield);
   }
+}
+
+/* FONTS */
+@font-face {
+	font-family: 'Clear Sans2';
+	src: url('/fonts/ClearSans-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Clear Sans2';
+	src: url('/fonts/ClearSans-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Clear Sans2';
+	src: url('/fonts/ClearSans-Medium.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
 }
