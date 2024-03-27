@@ -65,7 +65,7 @@ import { useVisitorsStore } from '~/utils/stores/visitors';
         type: 'bar',
         data: visits,
         itemStyle: {
-          color: '#F1F9F7',
+          color: '#EAF6F3',
           borderRadius: 3
         },
         emphasis: {

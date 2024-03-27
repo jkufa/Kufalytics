@@ -7,6 +7,8 @@
   --color-stonier: #EBEBED;
   --color-greenfield: #008E75;
   --color-text: #212927;
+  --color-text: #212927;
+  --color-border: #CCCECD;
 }
 body {
   background-color: var(--color-stone);
